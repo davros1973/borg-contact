@@ -1,0 +1,8 @@
+{
+  "dependencies": {},
+  "globalDependencies": {
+    "gapi.youtube": "registry:dt/gapi.youtube#3.0.0+20161229235626",
+    "three": "registry:dt/three#0.83.0+20170208025302",
+    "youtube": "registry:dt/youtube#0.0.0+20161119044246"
+  }
+}
