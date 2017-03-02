@@ -255,7 +255,7 @@ jq2(function( $ )
 			   (unless faded-in by cued event or tardy timeout)
 			   #player obscured anyway by warpdrive iframe
 			   silently "show" when presumed obscured */
-			$("#player").css('display', 'block'); 
+			$("#player").css("display", "block"); 
 		}, 3000);
 		
 		done = true; // do (done) once only (single threaded)
