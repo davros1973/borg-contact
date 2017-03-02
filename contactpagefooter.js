@@ -4,7 +4,8 @@
 	Learning/relearning JavaScript, JQuery, three.js
 	as I go along - apologies for bad code, and my 
 	sticking to inefficient curly brace placement ...
-	... and huge TAB indents etc.
+	... and huge TAB indents etc. And also I tend towards 
+	... err ... double quotes.  I know, I know.
 	helps me read the code at the moment.
 
 	See working at: https://blog.xarta.co.uk/about/contact/
@@ -105,10 +106,10 @@ jq2(function( $ )
 	// ... player-cover blocks controls (need them on mobile devices)
 	// ... so leave that until later, in initCover()
 	// -------------------------------------------------------------- 
-	$(".entry-content").hide('fast',function() 
+	$(".entry-content").hide("fast",function() 
 	{
-		$(".entry-content").html('<div id=\"player-container\"><div id=\"player\"></div></div>');
-		$(".entry-content").show('fast',function()
+		$(".entry-content").html("<div id=\"player-container\"><div id=\"player\"></div></div>");
+		$(".entry-content").show("fast",function()
 		{
 			// YOUTUBE IFRAME API
 			// 2. continued from header: This code loads the IFrame Player API code asynchronously.
@@ -127,23 +128,23 @@ function onYouTubeIframeAPIReady()
 {
 	clog("onYouTubeIframeAPIReady",1);
 
-	player = new YT.Player('player', 
+	player = new YT.Player("player", 
 	{
-  	  height: '1080', width: '688',
-  	  videoId: 'WH4fX3SlsVY',
+  	  height: "1080", width: "688",
+  	  videoId: "WH4fX3SlsVY",
   	  playerVars: 
 	  {
-	    'playlist': 'WH4fX3SlsVY',
-	    'loop': 1,
-	    'autoplay': 0, 
-	    'controls': 1,
-	    'showinfo': 0,
-	    'wmode': 'transparent'
+	    "playlist": "WH4fX3SlsVY",
+	    "loop": 1,
+	    "autoplay": 0, 
+	    "controls": 1,
+	    "showinfo": 0,
+	    "wmode": "transparent"
   	  },
       events: 
 	  {
-	    'onReady': onPlayerReady,
-	    'onStateChange': onPlayerStateChange
+	    "onReady": onPlayerReady,
+	    "onStateChange": onPlayerStateChange
       }
     });
 }
@@ -162,7 +163,7 @@ function onPlayerReady(event)
 		var isiOS = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)/i) != null; //boolean check for iOS devices
 		if (isiOS)
 		{ // if iOS device
-			event.target.cueVideoById('WH4fX3SlsVY');
+			event.target.cueVideoById("WH4fX3SlsVY");
 		}
 		else
 		{ // non iOS devices, just try to play video
@@ -190,7 +191,7 @@ function jumpToTheEnd()
 	{
 		clog("ENDED",1);
 		// need to refactor code and do more of this sort of thing
-		if (!(typeof borg ==='undefined' || borg ===null))
+		if (!(typeof borg ==="undefined" || borg ===null))
 		{
 			scene.remove(borg);
 		}
@@ -362,18 +363,18 @@ function coughUpDetails()
 				$("#player-container").html(passthis.responseText);
 				// ------------------------------------------------
 
-				$("#player-container").css('margin','0');
-				$("#player-container").css('margin-left','-20px');
+				$("#player-container").css("margin","0");
+				$("#player-container").css("margin-left","-20px");
 				
-				$("#player-container").css('perspective', '0');
-				$("#player-container").css('width', '20em');  // review	
-				$("#player-container").css('width', '110%');
+				$("#player-container").css("perspective", "0");
+				$("#player-container").css("width", "20em");  // review	
+				$("#player-container").css("width", "110%");
 				$("#player-container").show("slow", function()
 				{
 					// remove the 100vh max-height from before
-					$(".entry-content").css('max-height', '');
-					$(".entry-content").css('height', 'auto');
-					$("#player-container").css('height', 'auto');
+					$(".entry-content").css("max-height", "");
+					$(".entry-content").css("height", "auto");
+					$("#player-container").css("height", "auto");
 					
 					$("html, body").animate({ scrollTop: $(".entry-title").offset().top}, "slow" );
 				});			
@@ -457,8 +458,8 @@ function initCover()
 
 		if(extraDebug>1)
 		{
-			$("#player-container").css('border','solid 3px blue');
-			$("#player-cover").css('border', 'solid 3px red');
+			$("#player-container").css("border","solid 3px blue");
+			$("#player-cover").css("border", "solid 3px red");
 		}
 		redimension();
 	});
@@ -481,7 +482,7 @@ function initTHREEscene()
 {
 	clog("initTHREEscene",1);
 
-	container = document.getElementById('player-cover');
+	container = document.getElementById("player-cover");
 	camera = new THREE.PerspectiveCamera( 75, container.offsetWidth/container.offsetHeight, 0.1, 1000 );
 	renderer.setSize( container.offsetWidth, container.offsetHeight );
 	container.appendChild( renderer.domElement );
@@ -824,12 +825,12 @@ function startBorg()
 	clog("Starting the Borg cube",1);
 
 	var textureLoader = new THREE.TextureLoader();
-	var texture0 = textureLoader.load( projectUrl + '2014-me-at-work256.png' ); // right
-	var texture1 = textureLoader.load( projectUrl + 'borgcube256.png' ); // left
-	var texture2 = textureLoader.load( projectUrl + 'borgcube256.png' ); // top
-	var texture3 = textureLoader.load( projectUrl + 'borgcube256.png' ); // bottom
-	var texture4 = textureLoader.load( projectUrl + 'borgcube256.png' ); // back
-	var texture5 = textureLoader.load( projectUrl + 'borgcube256.png' ); // front
+	var texture0 = textureLoader.load( projectUrl + "2014-me-at-work256.png" ); // right
+	var texture1 = textureLoader.load( projectUrl + "borgcube256.png" ); // left
+	var texture2 = textureLoader.load( projectUrl + "borgcube256.png" ); // top
+	var texture3 = textureLoader.load( projectUrl + "borgcube256.png" ); // bottom
+	var texture4 = textureLoader.load( projectUrl + "borgcube256.png" ); // back
+	var texture5 = textureLoader.load( projectUrl + "borgcube256.png" ); // front
 
 	var materials = [
 		//new THREE.MeshBasicMaterial( { color: 0x00ff00 } ),
@@ -905,12 +906,12 @@ jq2(function( $ )
 	{
 		clog("resizing",1);
 
-		$("div.entry-content").css('height', '50%');
-		$("div.entry-content").css('max-height', '100vh'); // more assumptions (supported)
+		$("div.entry-content").css("height", "50%");
+		$("div.entry-content").css("max-height", "100vh"); // more assumptions (supported)
 
 		// clog("window height is " + $(window).height(),2);
 
-		$("#player-container").css('width',688);
+		$("#player-container").css("width",688);
 		$("#player-container").height(0.95* $(window).height());
 
 
@@ -945,7 +946,7 @@ jq2(function( $ )
 			$("#player-cover").height(actualHeight);
 			$("#player-cover").width(actualWidth);
 
-			if (!(typeof camera ==='undefined' || camera ===null))
+			if (!(typeof camera ==="undefined" || camera ===null))
 			{
 				// notify the renderer of the size change
 				renderer.setSize( actualWidth, actualHeight );
