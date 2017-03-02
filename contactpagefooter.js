@@ -153,62 +153,62 @@ function onYouTubeIframeAPIReady()
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) 
 {
-	jq2(function( $ ) 
-	{
-		clog("onPlayerReady",1);
+jq2(function( $ ) 
+{
+	clog("onPlayerReady",1);
 
-		$(".site-branding").hide("slow");
-		clog("hiding site-branding",1);
+	$(".site-branding").hide("slow");
+	clog("hiding site-branding",1);
 
-		var isiOS = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)/i) != null; //boolean check for iOS devices
-		if (isiOS)
-		{ // if iOS device
-			event.target.cueVideoById("WH4fX3SlsVY");
-		}
-		else
-		{ // non iOS devices, just try to play video
-			event.target.playVideo();
-			setTimeout(function() 
+	var isiOS = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)/i) != null; //boolean check for iOS devices
+	if (isiOS)
+	{ // if iOS device
+		event.target.cueVideoById("WH4fX3SlsVY");
+	}
+	else
+	{ // non iOS devices, just try to play video
+		event.target.playVideo();
+		setTimeout(function() 
+		{
+			clog("Hmmm " + player.getPlayerState(),1);
+			if ( (player.getPlayerState() != YT.PlayerState.PLAYING))
 			{
-				clog("Hmmm " + player.getPlayerState(),1);
-				if ( (player.getPlayerState() != YT.PlayerState.PLAYING))
+				// e.g. Android, or just slow!
+				$("#player").fadeIn("500", function()
 				{
-					// e.g. Android, or just slow!
-					$("#player").fadeIn("500", function()
-					{
-						redimension();
-					});
-				}
-			}, 1000);
-		}			
-	});
+					redimension();
+				});
+			}
+		}, 1000);
+	}			
+}); // end jq2
 }
 
 // tidy-up, ready for contact details
 function jumpToTheEnd()
 {
-	jq2(function( $ ) 
+jq2(function( $ ) 
+{
+	clog("ENDED",1);
+	// need to refactor code and do more of this sort of thing
+	if (!(typeof borg ==="undefined" || borg ===null))
 	{
-		clog("ENDED",1);
-		// need to refactor code and do more of this sort of thing
-		if (!(typeof borg ==="undefined" || borg ===null))
+		scene.remove(borg);
+	}
+	/* i.e. doing this for now - but maybe in future
+		add new things to the scene? More sophisticated?
+	*/
+	$("#player-cover").remove;
+	$("#player").fadeOut("fast", function()
+	{
+		player.destroy();
+		$(".site-branding").show("slow", function()
 		{
-			scene.remove(borg);
-		}
-		/* i.e. doing this for now - but maybe in future
-		   add new things to the scene? More sophisticated?
-		*/
-		$("#player-cover").remove;
-		$("#player").fadeOut("fast", function()
-		{
-			player.destroy();
-			$(".site-branding").show("slow", function()
-			{
-				$(".entry-title").html("Contact");
-				coughUpDetails();
-			});			
-		});
-	});	
+			$(".entry-title").html("Contact");
+			coughUpDetails();
+		});			
+	});
+});	// end jq2
 }
 
 // bind to RE-RUN VIDEO button ...
@@ -351,40 +351,40 @@ function ajax(url, responseFunction, postString)
 function coughUpDetails()
 {
 	clog("coughUpDetails",1);
-	jq2(function( $ ) 
-	{ 
-		var url = projectUrl+"contactdetails.php";
-		// $ becomes part of closure
-		function responseFunction(passthis)
-		{		
-			$("#player-container").hide("slow", function()
+jq2(function( $ ) 
+{ 
+	var url = projectUrl+"contactdetails.php";
+	// $ becomes part of closure
+	function responseFunction(passthis)
+	{		
+		$("#player-container").hide("slow", function()
+		{
+			// IMPORTANT BIT ----------------------------------
+			$("#player-container").html(passthis.responseText);
+			// ------------------------------------------------
+
+			$("#player-container").css("margin","0");
+			$("#player-container").css("margin-left","-20px");
+			
+			$("#player-container").css("perspective", "0");
+			$("#player-container").css("width", "20em");  // review	
+			$("#player-container").css("width", "110%");
+			$("#player-container").show("slow", function()
 			{
-				// IMPORTANT BIT ----------------------------------
-				$("#player-container").html(passthis.responseText);
-				// ------------------------------------------------
-
-				$("#player-container").css("margin","0");
-				$("#player-container").css("margin-left","-20px");
+				// remove the 100vh max-height from before
+				$(".entry-content").css("max-height", "");
+				$(".entry-content").css("height", "auto");
+				$("#player-container").css("height", "auto");
 				
-				$("#player-container").css("perspective", "0");
-				$("#player-container").css("width", "20em");  // review	
-				$("#player-container").css("width", "110%");
-				$("#player-container").show("slow", function()
-				{
-					// remove the 100vh max-height from before
-					$(".entry-content").css("max-height", "");
-					$(".entry-content").css("height", "auto");
-					$("#player-container").css("height", "auto");
-					
-					$("html, body").animate({ scrollTop: $(".entry-title").offset().top}, "slow" );
-				});			
-			});
+				$("html, body").animate({ scrollTop: $(".entry-title").offset().top}, "slow" );
+			});			
+		});
 
-		}
-		var postString = "authentication="+authenticationCode;
-		
-		ajax(url, responseFunction, postString);
-	});
+	}
+	var postString = "authentication="+authenticationCode;
+	
+	ajax(url, responseFunction, postString);
+}); // end jq2
 
 }
 
@@ -403,27 +403,27 @@ function coughUpDetails()
 */
 function startTunnel()
 {
-	 jq2(function( $ ) 
-	 {
-		clog("#warpdrive fadein",1);
-		var newStuff = "<iframe id=\"warpdrive\" src=\""+threejstunnelUrl+"\" webkitallowfullscreen=\"\" mozallowfullscreen=\"\" allowfullscreen=\"\" frameborder=\"0\"></iframe>";
-		$("#player-container").append(newStuff);
-		redimension();
-		$("#warpdrive").fadeIn("slow", function() 
-		{				
-			// something
-		}); 
-	});
+jq2(function( $ ) 
+{
+	clog("#warpdrive fadein",1);
+	var newStuff = "<iframe id=\"warpdrive\" src=\""+threejstunnelUrl+"\" webkitallowfullscreen=\"\" mozallowfullscreen=\"\" allowfullscreen=\"\" frameborder=\"0\"></iframe>";
+	$("#player-container").append(newStuff);
+	redimension();
+	$("#warpdrive").fadeIn("slow", function() 
+	{				
+		// something
+	}); 
+}); // end jq2
 }
 function endTunnel()
 {
-	jq2(function( $ ) 
-	{
-		clog("#warpdrive fadeout",1);
-		$("#warpdrive").fadeOut("fast", function(){
-			$("#warpdrive").remove;
-		});
+jq2(function( $ ) 
+{
+	clog("#warpdrive fadeout",1);
+	$("#warpdrive").fadeOut("fast", function(){
+		$("#warpdrive").remove;
 	});
+}); // end jq2
 }
 
 // stack of absolute divs including iframes, over (relative) player-container
@@ -436,33 +436,33 @@ function endTunnel()
 //             #player-message  (also relative)
 function initCover() 
 {
-	jq2(function( $ ) 
+jq2(function( $ ) 
+{
+	clog("initCover",1);
+	// #player-cover will block YouTube controls, so left until here
+	// ... after the video is playing, because autoplay doesn't work
+	// ... on mobile devices.
+	$("#player-container").append("<div id=\"player-cover\"></div>");
+	$("#player-container").append("<div id=\"player-time\"></div>");
+	$("#player-container").append("<div id=\"player-message\"></div>");
+	
+	// now player-time exists:
+	if(extraDebug>0)
 	{
-		clog("initCover",1);
-		// #player-cover will block YouTube controls, so left until here
-		// ... after the video is playing, because autoplay doesn't work
-		// ... on mobile devices.
-		$("#player-container").append("<div id=\"player-cover\"></div>");
-		$("#player-container").append("<div id=\"player-time\"></div>");
-		$("#player-container").append("<div id=\"player-message\"></div>");
-		
-		// now player-time exists:
-		if(extraDebug>0)
-		{
-			$("#player-time").append("<div id=\"player-timeindex\"></div>");
-			$("#player-timeindex").html("Video time index");
-		}
+		$("#player-time").append("<div id=\"player-timeindex\"></div>");
+		$("#player-timeindex").html("Video time index");
+	}
 
-		$("#player-time").append("<div id=\"player-countdown\"></div>");
-		$("#player-countdown").html("COUNTDOWN");
+	$("#player-time").append("<div id=\"player-countdown\"></div>");
+	$("#player-countdown").html("COUNTDOWN");
 
-		if(extraDebug>1)
-		{
-			$("#player-container").css("border","solid 3px blue");
-			$("#player-cover").css("border", "solid 3px red");
-		}
-		redimension();
-	});
+	if(extraDebug>1)
+	{
+		$("#player-container").css("border","solid 3px blue");
+		$("#player-cover").css("border", "solid 3px red");
+	}
+	redimension();
+}); // end jq2
 }
 
 // GLOBALS   :(   TODO: THIS BETTER!!! With closures or something.
