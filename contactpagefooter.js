@@ -1,25 +1,25 @@
 /// <reference path="typings/globals/three/index.d.ts" />
 
-/* 	Feburary 2017, David Bayliss
-   	Learning/relearning JavaScript, JQuery, three.js
-   	as I go along - apologies for bad code, and my 
-   	sticking to inefficient curly brace placement ...
-   	... and huge TAB indents etc.
-   	helps me read the code at the moment.
+/*	Feburary 2017, David Bayliss
+	Learning/relearning JavaScript, JQuery, three.js
+	as I go along - apologies for bad code, and my 
+	sticking to inefficient curly brace placement ...
+	... and huge TAB indents etc.
+	helps me read the code at the moment.
 
-    See working at: https://blog.xarta.co.uk/about/contact/
-    Also see: contactpagefooter.js
-	          contactpage.css
-			  contactdetails.php
+	See working at: https://blog.xarta.co.uk/about/contact/
+	Also see: 	contactpagefooter.js
+				contactpage.css
+				contactdetails.php
 
 	Looks for Divs in WordPress theme: entry-content & entry-title
 
 
-   	PURPOSE: fun YouTube video iframe +three.js (webGl) effects.
-   	Delay provision of contact details - act as deterrant to scrapers
-   	(automated and person)
+	PURPOSE: fun YouTube video iframe +three.js (webGl) effects.
+	Delay provision of contact details - act as deterrant to scrapers
+	(automated and person)
 
-   	APOLOGIES re. accessibility ... need to take into account
+	APOLOGIES re. accessibility ... need to take into account
 */
 
 // some useful references / inspirations:
@@ -503,12 +503,12 @@ function action()
 	var startInside = false;
 	var makeBigCloserToEarth = false;
 
-    // STILL GOT A TODO SECTION ... when Borg cube reaches
+	// STILL GOT A TODO SECTION ... when Borg cube reaches
 	// my street ...
 	// used in other time calculations: set here:
-	var pauseTime = 5000; // what to do during this time?
-	                      // blow the house-up? Don't want to give
-						  // people ideas!
+	var pauseTime = 5000; 	// what to do during this time?
+							// blow the house-up? Don't want to give
+							// people ideas!
 
 	// better let people know there is an end to the madness
 	var countDown = 120 + (pauseTime/1000);
@@ -518,7 +518,7 @@ function action()
 
 	// attach a separate resize handler to resize 
 	// the renderer and camera properly
-    // NOW not using (added lines to my "redimension" function)
+	// NOW not using (added lines to my "redimension" function)
 	//var winResize = new THREEx.WindowResize(renderer, camera)
 	
 	animate();
@@ -527,9 +527,9 @@ function action()
 		requestAnimationFrame( animate );     // Top of function!
 		                                      // three.js efficiency
 
-		gEarthTime = player.getCurrentTime(); // track video progress
-											  // for syncing and coping
-											  // with buffering etc.
+		gEarthTime = player.getCurrentTime(); 	// track video progress
+												// for syncing and coping
+												// with buffering etc.
 
 		render();
 		
@@ -547,7 +547,7 @@ function action()
 		renderer.render(scene, camera);
 	};
 
-    // changes to the scene - sync with video progress
+	// changes to the scene - sync with video progress
 	// this will loop around at high FPS depending on machine performance
 	// works ok (in CHROME! ONLY) on year-2009 Core 2 Duo laptop with 8GB Ram
 	function update()
@@ -673,11 +673,11 @@ function action()
 		}
 		*/
 
-        /* while in tunnel, tumble about
-		   translateZ will appear to move the cube (position)
-		   where the z axis changes with the tumbling
-		   over-all translation averages out
-		   AFTER 11 secs, try to fade out the "warpdrive" iframe */
+		/* 	while in tunnel, tumble about
+			translateZ will appear to move the cube (position)
+			where the z axis changes with the tumbling
+			over-all translation averages out
+			AFTER 11 secs, try to fade out the "warpdrive" iframe */
 		if (progressTime < 11)
 		{			
 			borg.translateZ(-transformRate);
@@ -906,7 +906,7 @@ jq2(function( $ )
 		clog("resizing",1);
 
 		$("div.entry-content").css('height', '50%');
-		$("div.entry-content").css('max-height', '100vh');
+		$("div.entry-content").css('max-height', '100vh'); // more assumptions (supported)
 
 		// clog("window height is " + $(window).height(),2);
 
