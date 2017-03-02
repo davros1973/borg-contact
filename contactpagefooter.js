@@ -499,6 +499,7 @@ function action()
 	var afterPause = false;
 	var shownGoingToDavesPlace = false;
 	var startInside = false;
+	var makeBigCloserToEarth = false;
 
     // STILL GOT A TODO SECTION ... when Borg cube reaches
 	// my street ...
@@ -744,6 +745,13 @@ function action()
 		if (progressTime > 40 && progressTime < 43.5)
 		{
 			clog("Borg back in view",1);
+			if (!makeBigCloserToEarth)
+			{
+				makeBigCloserToEarth = true;
+				borg.scale.x = 6;
+				borg.scale.y = 6;
+				borg.scale.z = 6;
+			}
 
 			borg.position.z = borg.position.z -(2*transformRate);
 			camera.position.z = camera.position.z +(2*transformRate);
