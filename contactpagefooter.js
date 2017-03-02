@@ -492,6 +492,8 @@ function action()
 	clog("action",1);
 
 	// "do once" "flags" set during looping update()
+	// TODO: custom events so that I can add/remove events
+	// by time index ... abstraction/decoupling etc.
 	var warpFadedOut = false;
 	var warpShrink = false;
 	var straightenedOut = false;
