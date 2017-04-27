@@ -16,6 +16,7 @@ Issues:
 - Firefox has an issue with 3drotate (in JQuery)
 - Internet Explorer doesn't like the tunnelgl iframe
 - Edge works but needs more horsepower (struggles on a circa 2009 Core 2 Duo laptop)
+- Edge - update April 2017: noticed on Windows 10 v1703 Edge continues countdown past 0
 
 
 ToDo (might add-to as I remember)
