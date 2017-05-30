@@ -28,12 +28,17 @@
 	https://stemkoski.github.io/Three.js/Mesh-Movement.html
 */
 
-// ***********************************************
-// 0=off, 1, 2, 3: console log and other stuff   *
-var extraDebug = 1; //                           *
-// clog = console.log if number >= extraDebug    *
-clog("extraDebug set to: "+extraDebug, 1); //    *
-// ***********************************************
+
+/*	DEPENDENCY ON xarta-globals.js
+	for: 	var extraDebug
+			function clog
+			function xarta-ajax
+*/
+
+
+
+
+
 
 
 var authenticationCode = null; 	// get a random code for the session via ajax
@@ -298,48 +303,10 @@ function getSessionAuthentication()
 		clog("Received authenticationCode: "+passthis.responseText,1);
 		authenticationCode = passthis.responseText;
 	}
-	ajax(url, responseFunction, postString);
+	xarta_ajax(url, responseFunction, postString); // function in site-footer.js
 }
 
-/* TODO: look at using with promises
-         help get rid of associated globals
-         and better error handling
-    e.g. https://www.stephanboyer.com/post/107/fun-with-promises-in-javascript */
-function ajax(url, responseFunction, postString)
-{
-	// TODO: ERROR HANDLING (assumption that successful)
 
-	clog("ajax",1);
-
-	var xhttp;
-	// leaving-in feature support check for my education
-	// currently pointless given all the other assumptions and constraints
-	if (window.XMLHttpRequest)
-	{
-		xhttp = new XMLHttpRequest();
-	} else {
-		// code for IE6, IE5 (old example! leaving in for fun)
-		// (this code only works in latest Chrome on decent machine anyway!)
-		xhttp = new ActiveXObject("Microsoft.XMLHTTP"); 
-	}
-
-	xhttp.onreadystatechange = function() 
-	{
-		if (this.readyState == 4 && this.status == 200) 
-		{
-			responseFunction(this);
-		}
-		else
-		{
-			// What? Yeah? What you gonna do about it?
-		}
-	};
-	clog("url="+url+"?random="+Math.random(),1);
-	clog("postString="+postString,1);
-	xhttp.open("POST", url, true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send(postString);
-}
 
 
 /* Before using this function,  
@@ -383,7 +350,7 @@ jq2(function( $ )
 	}
 	var postString = "authentication="+authenticationCode;
 	
-	ajax(url, responseFunction, postString);
+	xarta_ajax(url, responseFunction, postString);
 }); // end jq2
 
 }
@@ -990,12 +957,3 @@ jq2(function( $ )
 }); // end jq2(function( $ ) ..
 
 
-
- // TODO: look at enum sort of stuff in JavaScript for level
- function clog(message,level)
- {
-	 if (extraDebug>=level)
-	 {
-		 console.log(message);
-	 }
- }
