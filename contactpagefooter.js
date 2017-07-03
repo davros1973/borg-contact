@@ -35,6 +35,15 @@
 			function xarta-ajax
 */
 
+/* DEPENDENCY ON my WordPress theme header/footer
+    but just for a function to set the css background
+    of elements with class .digit for the LED marquee
+    to get round a cross-origin problem, and to use
+    rel=preload
+*/
+
+/* DISCOVERED WordPress YouTube plugin breaks this */
+
 
 
 
@@ -144,6 +153,7 @@ function onYouTubeIframeAPIReady()
 	    "autoplay": 0, 
 	    "controls": 1,
 	    "showinfo": 0,
+        "rel": 0,
 	    "wmode": "transparent"
   	  },
       events: 
@@ -152,6 +162,7 @@ function onYouTubeIframeAPIReady()
 	    "onStateChange": onPlayerStateChange
       }
     });
+
 }
 
 // YOUTUBE IFRAME API (this handler set in events JSON above)
@@ -161,6 +172,7 @@ function onPlayerReady(event)
 jq2(function( $ ) 
 {
 	clog("onPlayerReady",1);
+    player.origin = "https://blog.xarta.co.uk";
 
 	$(".site-branding").hide("slow");
 	clog("hiding site-branding",1);
@@ -405,12 +417,8 @@ function initCover()
 {
 jq2(function( $ ) 
 {
-    addLedGif(); // DARN ... introduced dependency on my theme because of preloading
-                 // the ledmarquee.gif with link rel=preload ... so crossorigin issue
-                 // ... so means can't use normal css background image ... have to use
-                 // javascript to load image and then assign to css background as data
-                 // uri ... BUT ... in this script (not sure where/why) the ledmarquee div
-                 // digits lose the background again so I have to add the background again
+    addLedGif();
+
 	clog("initCover",1);
 	// #player-cover will block YouTube controls, so left until here
 	// ... after the video is playing, because autoplay doesn't work
@@ -459,6 +467,12 @@ function initTHREEscene()
 	camera = new THREE.PerspectiveCamera( 75, container.offsetWidth/container.offsetHeight, 0.1, 1000 );
 	renderer.setSize( container.offsetWidth, container.offsetHeight );
 	container.appendChild( renderer.domElement );
+    addLedGif(); // DARN ... introduced dependency on my theme because of preloading
+                 // the ledmarquee.gif with link rel=preload ... so crossorigin issue
+                 // ... so means can't use normal css background image ... have to use
+                 // javascript to load image and then assign to css background as data
+                 // uri ... BUT ... in this script (not sure where/why) the ledmarquee div
+                 // digits lose the background again so I have to add the background again
 }
 
 function action()
@@ -509,11 +523,21 @@ function action()
 		
 		// only update() animation if not buffering / ended etc. etc.
 		// might mean three.js clock delta will be big after buffering?
-		if ( (player.getPlayerState() == YT.PlayerState.PLAYING) ||
-		     (player.getPlayerState() == YT.PlayerState.PAUSED))
+
+        // July 2017 ... this has been playing up - stuck in a playing state
+        // ... never ending. So putting in the countdown test too.
+
+		if ( ( (player.getPlayerState() == YT.PlayerState.PLAYING) ||
+		     (player.getPlayerState() == YT.PlayerState.PAUSED) )  && countDown > -2) 
 		{
 			update();
 		}
+        else if (countDown < -1)
+        {
+            // shouldn't get to this ... only if problem with YouTube API
+            player.stopVideo(); // this can cause problems too ... last resort
+            jumpToTheEnd();
+        }
 	}
 
 	function render() 
@@ -545,6 +569,14 @@ function action()
 			}
 			$("#player-countdown").html("PATIENCE: "+Math.round(countDown));				
 		});
+
+        if(countDown < 100 && progressTime < 10)
+        {
+            countDown = 0;
+            player.stopVideo();
+            jumpToTheEnd();
+            alert("Apologies ... the YouTube API seems glitch - not responding properly: aborting");
+        }
 
 		// I'm "playing" with these values to try to make motion
 		// proportional to video playback rather than computation power
