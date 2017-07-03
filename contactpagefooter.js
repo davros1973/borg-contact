@@ -405,6 +405,12 @@ function initCover()
 {
 jq2(function( $ ) 
 {
+    addLedGif(); // DARN ... introduced dependency on my theme because of preloading
+                 // the ledmarquee.gif with link rel=preload ... so crossorigin issue
+                 // ... so means can't use normal css background image ... have to use
+                 // javascript to load image and then assign to css background as data
+                 // uri ... BUT ... in this script (not sure where/why) the ledmarquee div
+                 // digits lose the background again so I have to add the background again
 	clog("initCover",1);
 	// #player-cover will block YouTube controls, so left until here
 	// ... after the video is playing, because autoplay doesn't work
