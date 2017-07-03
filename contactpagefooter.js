@@ -223,6 +223,7 @@ jq2(function( $ )
 		{
 			$(".entry-title").html("Contact");
 			coughUpDetails();
+            redimension = function(){console.log("Ignoring resizing now");}
 		});			
 	});
 });	// end jq2
